@@ -1,6 +1,6 @@
 import { Button, Card, Col } from 'react-bootstrap';
-
 import { FaShoppingCart, FaStar } from 'react-icons/fa';
+
 import { Product } from '../../pages/Home/types';
 
 type Props = {
