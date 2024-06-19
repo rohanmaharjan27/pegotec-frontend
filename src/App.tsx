@@ -1,20 +1,23 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { Spinner } from 'react-bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 function App() {
   const Home = lazy(() => import('./pages/Home'));
-  const Cart = lazy(() => import('./pages/Cart'));
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner animation="border" />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Suspense>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

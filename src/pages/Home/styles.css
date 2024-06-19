@@ -25,10 +25,14 @@
   right: 12px;
 }
 
-.rating {
+.rating-col {
   position: absolute;
   top: 12px;
   left: 12px;
   display: flex;
   align-items: center;
+}
+
+.rating-text {
+  margin-left: 4px;
 }

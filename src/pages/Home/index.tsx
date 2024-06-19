@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   Container,
@@ -9,15 +9,21 @@ import {
   Button,
 } from 'react-bootstrap';
 import { FaShoppingCart, FaStar } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+
 import { useAppDispatch, useAppSelector } from '../../store';
 import { fetchProducts } from '../../slices/productsSlice';
+import { addItemToCart } from '../../slices/cartSlice';
+import Cart from '../../components/Cart';
+import { Product } from './types';
 import './styles.css';
 
 const { Img, Body, Title, Text } = Card;
 
-const Products: React.FC = () => {
+const Index: React.FC = () => {
   const dispatch = useAppDispatch();
   const { products, status, error } = useAppSelector(state => state.products);
+  const [showCart, setShowCart] = useState<boolean>(false);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -25,9 +31,21 @@ const Products: React.FC = () => {
     }
   }, [status, dispatch]);
 
+  const handleClose = () => setShowCart(false);
+  const handleShow = () => setShowCart(true);
+
+  const handleAddToCart = (product: Product) => {
+    dispatch(addItemToCart({ ...product, quantity: 1 }));
+    toast.success(`${product.title} added to cart!`);
+  };
+
   return (
     <Container>
+      <Button variant="primary" onClick={handleShow}>
+        View Cart
+      </Button>
       <h2 className="my-4">Products</h2>
+      <Cart show={showCart} handleClose={handleClose} />
       {status === 'loading' && <Spinner animation="border" />}
       {status === 'failed' && <Alert variant="danger">{error}</Alert>}
       {status === 'succeeded' && (
@@ -45,11 +63,16 @@ const Products: React.FC = () => {
                     <Text>
                       <strong>${price}</strong>
                     </Text>
-                    <Button variant="primary" className="btn-cart">
+                    <Button
+                      variant="primary"
+                      className="btn-cart"
+                      onClick={() => handleAddToCart(product)}
+                    >
                       <FaShoppingCart />
                     </Button>
-                    <Col className="rating">
-                      <FaStar style={{ color: 'orange' }} /> {rating}
+                    <Col className="rating-col">
+                      <FaStar style={{ color: 'orange' }} />{' '}
+                      <strong className="rating-text">{rating}</strong>
                     </Col>
                   </Body>
                 </Card>
@@ -62,4 +85,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default Index;
