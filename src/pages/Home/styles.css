@@ -1,0 +1,34 @@
+.card-custom {
+  height: 470px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-img-custom {
+  height: 200px;
+  object-fit: cover;
+  margin-top: 24px;
+}
+
+.card-text-custom {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-cart {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.rating {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  align-items: center;
+}
