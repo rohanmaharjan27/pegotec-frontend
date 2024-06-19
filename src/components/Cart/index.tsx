@@ -9,10 +9,10 @@ import {
   removeItemFromCart,
 } from '../../slices/cartSlice';
 
-interface Props {
+type Props = {
   show: boolean;
   handleClose: () => void;
-}
+};
 
 const Cart: React.FC<Props> = ({ show, handleClose }) => {
   const dispatch = useAppDispatch();
@@ -51,24 +51,27 @@ const Cart: React.FC<Props> = ({ show, handleClose }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItems.map(item => (
-                    <tr key={item.id}>
-                      <td>
-                        <Image src={item.thumbnail} style={{ width: '50px' }} />
-                      </td>
-                      <td>{item.title}</td>
-                      <td>${item.price.toFixed(2)}</td>
-                      <td>{item.quantity}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          onClick={() => handleRemoveItem(item.id)}
-                        >
-                          <FaTrash />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
+                  {cartItems.map(item => {
+                    const { id, thumbnail, title, price, quantity } = item;
+                    return (
+                      <tr key={id}>
+                        <td>
+                          <Image src={thumbnail} style={{ width: '50px' }} />
+                        </td>
+                        <td>{title}</td>
+                        <td>${price.toFixed(2)}</td>
+                        <td>{quantity}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleRemoveItem(id)}
+                          >
+                            <FaTrash />
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
               <h5>Total: ${totalPrice.toFixed(2)}</h5>
